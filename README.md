@@ -1,49 +1,39 @@
-# technical-decisions
+# Expériences Techniques
 
-Décisions techniques prises lors de mon alternance chez Sylvamap.
+## Sylvamap – 2FA
 
-## Implémentation 2FA
+**Intégration manuelle** vs django-two-factor-auth → Contrôle total, traçabilité sécurité
 
-Intégration manuelle vs Bibliothèque
-- Choix : Intégration manuelle
-- Pourquoi : Contrôle total, adaptation aux besoins, meilleure traçabilité de sécurité
-- Rejeté : django-two-factor-auth (trop rigide)
+**Twilio vs Vonage** → 99.99% uptime, communauté
 
-## Fournisseur SMS
+**Django Cache vs PostgreSQL** → Expiration auto 15min
 
-Twilio vs Vonage vs Plivo
-- Choix : Twilio
-- Pourquoi : 99.99% uptime, meilleure communauté, docs excellentes
-- Critères : fiabilité, coûts, taille communauté, support
+**CharField vs Integer** → Préserve zéros ("001234")
 
-## Stockage du code
+**phone_number + phone_2fa** → Séparation propre, changement phone n'affecte pas 2FA
 
-Django Cache vs PostgreSQL
-- Choix : Django Cache
-- Pourquoi : Expiration auto après 15min, pas de nettoyage manuel, plus rapide
+**Refactoring views** : activate/disable_2fa fusionnées, -50 lignes, DRY
 
-## Format du code
+---
 
-CharField vs Integer
-- Choix : CharField pour code 6 chiffres
-- Pourquoi : Préserve les zéros ("001234" reste "001234")
-- Problème Integer : Perd les zéros, casse la validation
+## Tests & CI/CD
 
-## Numéros de téléphone
+Tests unitaires + intégration GitHub Actions
 
-Champs séparés
-- phone_number (profil)
-- phone_2fa (sécurité)
-- Pourquoi : Changer le téléphone n'affecte pas 2FA. Architecture plus propre.
+---
 
-## Optimisation de code
+## Phileas – Mobile API C# & Authentification
 
-Fusion de vues Django similaires
-- Consolidé activate_2fa_view et disable_2fa_view avec héritage de classe
-- Supprimé 50+ lignes dupliquées
-- Plus facile à maintenir, respecte le principe DRY
+App Mobile → API C# Service → BDD
 
+AuthPin + Biométrique → Traçabilité via API
 
-## Processus
+Logging d'auth centralisé
 
-Chaque décision documentée via des issues GitHub pour la traçabilité.
+---
+
+## Bugs Critiques
+
+Quick fix → Marche ? Oui = Doc. Non = Recul analytique
+
+Comprendre avant de fixer
