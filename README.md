@@ -37,3 +37,13 @@ Logging d'auth centralisé
 Quick fix → Marche ? Oui = Doc. Non = Recul analytique
 
 Comprendre avant de fixer
+
+---
+
+## Optimisations Performance & Stabilité
+
+**Fuites mémoire** → Correction + nettoyage
+
+**Logs critiques** → Ajouté partout où c'est nécessaire
+
+**Migration progressive C → C++** → Remplacement incrémental
